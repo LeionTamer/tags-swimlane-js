@@ -8,18 +8,24 @@ const CARD_STYLES = {
 }
 
 export default function Card({ id, text, draggable = true, dispatch }) {
-  const [tagText, setTagText] = useState('')
+  const [tagText, setTagText] = useState(text)
   const [disabled, setDisabled] = useState(true)
 
-  const handleDoubleClick = () => {
-    setDisabled(false)
-  }
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      setDisabled(!disabled)
+  const handleClick = (event) => {
+    console.log(`event.detail = ${event.detail}`)
+    if (event.detail === 1) {
+      setDisabled(true)
     }
-    if (event.key === 'Delete' && disabled) {
-      setTagText('')
+    if (event.detail === 2) {
+      setDisabled(false)
+      document.getElementById(`input-${id}`).focus()
+      document.getElementById(`input-${id}`).select()
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Delete') {
+      console.log(`Delete Key was pressed for id: ${id} disabled: ${disabled}`)
     }
   }
 
@@ -27,16 +33,16 @@ export default function Card({ id, text, draggable = true, dispatch }) {
     <div
       style={CARD_STYLES}
       draggable={draggable}
-      onDoubleClick={handleDoubleClick}
+      onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
       <input
         type="text"
         value={tagText}
         onChange={e => setTagText(e.target.value)}
-        onFocus={e => { console.log(`focused on ${id}`) }}
-        onBlur={e => { console.log(`blurred on ${id}`) }}
-        disabled={disabled} />
-    </div>
+        disabled={disabled}
+        id={`input-${id}`}
+        className="cardInput" />
+    </div >
   )
 }
