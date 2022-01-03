@@ -1,9 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import Card from './Card'
 
-const INPUT_STYLES = {
-  width: "95%"
-}
 const TAG_ACTIONS = {
   ADD: 'add'
 }
@@ -23,7 +20,7 @@ export default function Board({ tagCounter }) {
   }, [])
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && newTag.length !== 0) {
       dispatch({
         type: TAG_ACTIONS.ADD, tagInfo: {
           id: tagCounter(),
@@ -37,7 +34,7 @@ export default function Board({ tagCounter }) {
   return (
     <div className="board">
       <div>
-        <input type="text" value={newTag} onChange={e => setNewTag(e.target.value)} onKeyDown={handleKeyDown} style={INPUT_STYLES} />
+        <input type="text" value={newTag} onChange={e => setNewTag(e.target.value)} onKeyDown={handleKeyDown} />
       </div>
       {cardList.map((item, index) => (<Card key={index} id={item.id} text={item.text} dispatch={dispatch} />))}
     </div>
