@@ -1,9 +1,6 @@
 import React, { useReducer, useState } from 'react'
 import Card from './Card'
-
-const TAG_ACTIONS = {
-  ADD: 'add'
-}
+import { TAG_ACTIONS } from '../enum'
 
 export default function Board({ tagCounter }) {
   const [newTag, setNewTag] = useState('')
@@ -14,6 +11,8 @@ export default function Board({ tagCounter }) {
           ...state,
           { ...action.tagInfo }
         ]
+      case TAG_ACTIONS.DELETE:
+        return state.filter(tag => tag.id !== action.id)
       default:
         return state
     }

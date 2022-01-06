@@ -28,6 +28,10 @@ body {
   margin: 10px 5px;
   color: yellow;
 }
+.card:focus {
+  border: 1px solid;
+  border-color: yellow;
+}
 
 textarea,
 select,
