@@ -1,9 +1,10 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import Card from './Card'
 import { TAG_ACTIONS } from '../enum'
 
 export default function Board({ tagCounter }) {
   const [newTag, setNewTag] = useState('')
+  const [sortedCards, setSortedCards] = useState([])
   const [cardList, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case TAG_ACTIONS.ADD:
@@ -11,12 +12,20 @@ export default function Board({ tagCounter }) {
           ...state,
           { ...action.tagInfo }
         ]
+      case TAG_ACTIONS.EDIT:
+        return [...state].map(element => element.id === action.id ? { ...element, text: action.text } : element)
       case TAG_ACTIONS.DELETE:
         return state.filter(tag => tag.id !== action.id)
       default:
         return state
     }
   }, [])
+
+  useEffect(() => {
+    const _sortedCards = [...cardList].sort((a, b) => a.text.localeCompare(b.text))
+    // TODO: Flying Animation
+    setSortedCards(_sortedCards)
+  }, [cardList])
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && newTag.length !== 0) {
@@ -65,7 +74,7 @@ export default function Board({ tagCounter }) {
       <div>
         <input type="text" value={newTag} onChange={e => setNewTag(e.target.value)} onKeyDown={handleKeyDown} />
       </div>
-      {cardList.map((item) => (<Card key={item.id} id={item.id} text={item.text} dispatch={dispatch} />))}
+      {sortedCards.map((item) => (<Card key={item.id} id={item.id} text={item.text} dispatch={dispatch} />))}
     </div>
   )
 }

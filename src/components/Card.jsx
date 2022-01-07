@@ -8,8 +8,12 @@ export default function Card({ id, text, dispatch }) {
   const handleInputKeyDown = (event) => {
     if (event.key === 'Enter') {
       if (tagText.length === 0) deleteTag(id)
+      dispatch({
+        type: TAG_ACTIONS.EDIT,
+        id: id,
+        text: tagText
+      })
       setEditTag(false)
-      console.log('Enter Key Was Pressed')
     }
   }
 
