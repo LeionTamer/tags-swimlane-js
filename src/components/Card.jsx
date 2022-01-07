@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TAG_ACTIONS } from '../enum'
 
-export default function Card({ id, text, draggable = true, dispatch }) {
+export default function Card({ id, text, dispatch }) {
   const [tagText, setTagText] = useState(text)
   const [editTag, setEditTag] = useState(false)
 
@@ -10,6 +10,19 @@ export default function Card({ id, text, draggable = true, dispatch }) {
       if (tagText.length === 0) deleteTag(id)
       setEditTag(false)
       console.log('Enter Key Was Pressed')
+    }
+  }
+
+  const handleDragStart = (event) => {
+    event.dataTransfer.setData('text/plain', tagText)
+  }
+
+  const handleDragEnd = (event) => {
+    if (event.dataTransfer.dropEffect !== 'none') {
+      dispatch({
+        type: TAG_ACTIONS.DELETE,
+        id: id
+      })
     }
   }
 
@@ -33,6 +46,8 @@ export default function Card({ id, text, draggable = true, dispatch }) {
         draggable
         onKeyDown={handleCardInputKeyDown}
         onDoubleClick={() => setEditTag(true)}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
         tabIndex="0">
         {tagText}
       </div>

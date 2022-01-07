@@ -39,3 +39,7 @@ input {
   outline: none;
   border: 0;
 }
+
+.dragOver {
+  border: dashed 3px red;
+}
