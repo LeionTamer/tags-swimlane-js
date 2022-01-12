@@ -33,6 +33,13 @@ body {
   border-color: yellow;
 }
 
+.mock_card {
+  display: inline-block;
+  padding: 0 5px;
+  margin: 10px 5px;
+  border: 1px dashed red;
+}
+
 textarea,
 select,
 input {
@@ -42,4 +49,8 @@ input {
 
 .dragOver {
   border: dashed 3px red;
+}
+
+.hide {
+  display: none;
 }

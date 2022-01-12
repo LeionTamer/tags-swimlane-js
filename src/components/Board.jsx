@@ -2,7 +2,8 @@ import React, { useReducer, useState, useEffect } from 'react'
 import Card from './Card'
 import { TAG_ACTIONS } from '../enum'
 
-export default function Board({ tagCounter }) {
+export default function Board({ tagCounter, boardId }) {
+  const mockCardId = `${boardId}_mockCard`
   const [newTag, setNewTag] = useState('')
   const [sortedCards, setSortedCards] = useState([])
   const [cardList, dispatch] = useReducer((state, action) => {
@@ -39,6 +40,15 @@ export default function Board({ tagCounter }) {
     }
   }
 
+  const displayMockCard = (event) => {
+    const mockCard = document.getElementById(mockCardId)
+    if (event) {
+      mockCard.classList.remove('hide')
+    } else {
+      mockCard.classList.add('hide')
+    }
+  }
+
   const handleDragEnter = (event) => {
     event.preventDefault()
     event.target.classList.add('dragOver')
@@ -47,10 +57,12 @@ export default function Board({ tagCounter }) {
   const handleDragOver = (event) => {
     event.preventDefault()
     event.target.classList.add('dragOver')
+    displayMockCard(event)
   }
 
   const handleDragLeave = (event) => {
     event.target.classList.remove('dragOver')
+    displayMockCard()
   }
 
   const handleDrop = (event) => {
@@ -62,10 +74,13 @@ export default function Board({ tagCounter }) {
         text: tagText
       }
     })
+    displayMockCard()
   }
 
   return (
-    <div className="board"
+    <div
+      id={boardId}
+      className="board"
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -75,6 +90,7 @@ export default function Board({ tagCounter }) {
         <input type="text" value={newTag} onChange={e => setNewTag(e.target.value)} onKeyDown={handleKeyDown} />
       </div>
       {sortedCards.map((item) => (<Card key={item.id} id={item.id} text={item.text} dispatch={dispatch} />))}
+      <div className="mock_card hide" id={mockCardId}>targetCard</div>
     </div>
   )
 }

@@ -10,10 +10,10 @@ function App() {
   }
   return (
     <div className="app">
-      <Board tagCounter={useCounter} />
-      <Board tagCounter={useCounter} />
-      <Board tagCounter={useCounter} />
-      <Board tagCounter={useCounter} />
+      <Board tagCounter={useCounter} boardId='A' />
+      <Board tagCounter={useCounter} boardId='B' />
+      <Board tagCounter={useCounter} boardId='C' />
+      <Board tagCounter={useCounter} boardId='D' />
     </div>
   );
 }

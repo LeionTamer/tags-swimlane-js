@@ -5,6 +5,13 @@ export default function Card({ id, text, dispatch }) {
   const [tagText, setTagText] = useState(text)
   const [editTag, setEditTag] = useState(false)
 
+  const deleteTag = (id) => {
+    dispatch({
+      type: TAG_ACTIONS.DELETE,
+      id: id
+    })
+  }
+
   const handleInputKeyDown = (event) => {
     if (event.key === 'Enter') {
       if (tagText.length === 0) deleteTag(id)
@@ -28,13 +35,6 @@ export default function Card({ id, text, dispatch }) {
         id: id
       })
     }
-  }
-
-  const deleteTag = (id) => {
-    dispatch({
-      type: TAG_ACTIONS.DELETE,
-      id: id
-    })
   }
 
   const handleCardInputKeyDown = (event) => {
@@ -65,7 +65,7 @@ export default function Card({ id, text, dispatch }) {
       <input
         type="text"
         value={tagText}
-        id={`input-${id}`}
+        id={`input-${id}`} // TODO: Do I need this ID?
         className="cardInput"
         onKeyPress={handleInputKeyDown}
         onChange={e => setTagText(e.target.value)}
