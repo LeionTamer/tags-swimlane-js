@@ -67,14 +67,37 @@ export default function Board({ tagCounter, boardId }) {
 
   const handleDrop = (event) => {
     event.target.classList.remove('dragOver')
-    const tagText = event.dataTransfer.getData('text')
-    dispatch({
-      type: TAG_ACTIONS.ADD, tagInfo: {
-        id: tagCounter(),
-        text: tagText
-      }
-    })
+    const tagId = event.dataTransfer.getData('text/plain')
+    const card = document.getElementById(`card-${tagId}`)
+
+    animateMove(card)
+
+    setTimeout(() => {
+      dispatch({
+        type: TAG_ACTIONS.ADD, tagInfo: {
+          id: tagId,
+          text: card.textContent
+        }
+      })
+    }, 1000)
     displayMockCard()
+    event.preventDefault()
+  }
+
+  const animateMove = (card) => {
+    const targetCard = document.getElementById(mockCardId)
+    const cardRect = card.getBoundingClientRect()
+    const targetRect = targetCard.getBoundingClientRect()
+
+    const moveX = targetRect.x - cardRect.x
+    const moveY = targetRect.y - cardRect.y
+    document.documentElement.style.setProperty('--move-x', `${moveX}px`)
+    document.documentElement.style.setProperty('--move-y', `${moveY}px`)
+
+    card.classList.add('animate_move')
+    setTimeout(() => {
+      card.classList.remove('animate_move')
+    }, 1000)
   }
 
   return (

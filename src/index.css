@@ -1,3 +1,8 @@
+:root {
+  --move-x: 0px;
+  --move-y: 0px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -53,4 +58,14 @@ input {
 
 .hide {
   display: none;
+}
+
+.animate_move {
+  animation: move 1s;
+}
+
+@keyframes move {
+  to {
+    transform: translate(var(--move-x), var(--move-y));
+  }
 }

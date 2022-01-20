@@ -20,4 +20,4 @@ This is based on the coding challenge by Amplify to create a system that has 4 c
 - [x] AMP-006 - Move a tag to a different list by dragging and dropping
 - [x] AMP-007 - User is able to edit the tag by double-clicking
 - [x] AMP-008 - Tags are automatically sorted alphabetically
-- [ ] AMP-009 - After any change, tag should be animated by flying from their old to new position
+- [x] AMP-009 - After changing sections, tag should be animated by flying from their old to new position

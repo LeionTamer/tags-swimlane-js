@@ -25,15 +25,17 @@ export default function Card({ id, text, dispatch }) {
   }
 
   const handleDragStart = (event) => {
-    event.dataTransfer.setData('text/plain', tagText)
+    event.dataTransfer.setData('text/plain', id)
   }
 
   const handleDragEnd = (event) => {
     if (event.dataTransfer.dropEffect !== 'none') {
-      dispatch({
-        type: TAG_ACTIONS.DELETE,
-        id: id
-      })
+      setTimeout(() => {
+        dispatch({
+          type: TAG_ACTIONS.DELETE,
+          id: id
+        })
+      }, 1000)
     }
   }
 
@@ -46,6 +48,7 @@ export default function Card({ id, text, dispatch }) {
   if (!editTag) {
     return (
       <div
+        id={`card-${id}`}
         className="card"
         draggable
         onKeyDown={handleCardInputKeyDown}
@@ -65,7 +68,6 @@ export default function Card({ id, text, dispatch }) {
       <input
         type="text"
         value={tagText}
-        id={`input-${id}`} // TODO: Do I need this ID?
         className="cardInput"
         onKeyPress={handleInputKeyDown}
         onChange={e => setTagText(e.target.value)}
